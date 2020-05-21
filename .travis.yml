@@ -1,0 +1,41 @@
+language: java
+sudo: false
+
+jdk:
+  - oraclejdk7
+
+git:
+  submodules: false
+
+install: true
+script: ./travis.sh
+env:
+  - TEST=CI
+  - TEST=plugin
+    SQ_VERSION=DEV
+  - TEST=plugin
+    SQ_VERSION=LATEST_RELEASE
+  - TEST=plugin
+    SQ_VERSION=LTS
+matrix:
+  fast_finish: true
+  include:
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=fluent_http SQ_VERSION=LATEST_RELEASE
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=apache_commons_beanutils SQ_VERSION=LATEST_RELEASE
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=guava SQ_VERSION=LATEST_RELEASE
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=java_squid SQ_VERSION=LATEST_RELEASE
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=sonarqube_server SQ_VERSION=LATEST_RELEASE
+    - jdk: oraclejdk8
+      env: TEST=ruling PROJECT=jboss_ejb3_tutorial SQ_VERSION=LATEST_RELEASE
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+
+notifications:
+  email: false
